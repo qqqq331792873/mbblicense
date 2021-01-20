@@ -114,12 +114,21 @@ public class LicenseUtil {
 		return "cpis-workorder-provider";
 	}
 	
+	/**
+	 * 打印本机信息
+	 */
+	public void PrintMachineInformation() throws Exception {
+		System.out.println("--------------------------本机信息start--------------------------");
+		System.out.println("IpAddress:" + getIpAddress());
+		System.out.println("MacAddress:" + getMacAddress());
+		System.out.println("CPUSerial:" + getCPUSerial());
+		System.out.println("MotherboardSN:" + getMotherboardSN());
+		System.out.println("HardDiskSN:" + getHardDiskSN());
+		System.out.println("ServerName:" + getServerName());
+		System.out.println("--------------------------本机信息end--------------------------");
+	}
+	
 	public static void main(String[] args) throws Exception {
-		System.out.println("IpAddress:" + new LicenseUtil().getIpAddress());
-		System.out.println("MacAddress:" + new LicenseUtil().getMacAddress());
-		System.out.println("CPUSerial:" + new LicenseUtil().getCPUSerial());
-		System.out.println("MotherboardSN:" + new LicenseUtil().getMotherboardSN());
-		System.out.println("HardDiskSN:" + new LicenseUtil().getHardDiskSN());
-		System.out.println("ServerName:" + new LicenseUtil().getServerName());
+		new LicenseUtil().PrintMachineInformation();
 	}
 }

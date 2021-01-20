@@ -5,7 +5,6 @@ import de.schlichtherle.license.LicenseManager;
 import de.schlichtherle.license.LicenseParam;
 import lombok.extern.slf4j.Slf4j;
 import mbblicense.client.pojo.ClientLicenseParam;
-import mbblicense.client.pojo.LicenseExtra;
 import mbblicense.client.util.LicenseUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * @author 马冰冰
@@ -39,7 +39,7 @@ public class ClientLicenseManager extends LicenseManager {
 	}
 	
 	/**
-	 * 安装
+	 * 安装之后,按理说就不应该再安装了.后续只需要验证即可
 	 */
 	public void install() throws Exception {
 		if (licenseContent == null) {
@@ -47,9 +47,7 @@ public class ClientLicenseManager extends LicenseManager {
 				if (licenseContent == null) {
 					log.info("开始安装客户端证书!");
 					setLicenseParam(clientLicenseParam);
-					ClassPathResource classPathResource = new ClassPathResource("license.lic");
-					licenseContent = install(classPathResource.getFile());
-					// licenseContent = install(new File(licPath));
+					licenseContent = install(new ClassPathResource(licPath).getFile());
 					log.info("客户端证书安装成功!");
 				}
 			}
@@ -86,8 +84,8 @@ public class ClientLicenseManager extends LicenseManager {
 			isOk = false;
 		}
 		
-		LicenseExtra extra     = (LicenseExtra) licenseContent.getExtra();
-		String       ipAddress = extra.getIpAddress();
+		HashMap<String, String> extra     = (HashMap<String, String>) licenseContent.getExtra();
+		String                  ipAddress = extra.get("ipAddress");
 		if (ipAddress != null && !"null".equals(ipAddress)) {
 			String ipAddressLocal = licenseUtil.getIpAddress();
 			if (ipAddress.equals(ipAddressLocal)) {
@@ -99,7 +97,7 @@ public class ClientLicenseManager extends LicenseManager {
 			}
 		}
 		
-		String macAddress = extra.getMacAddress();
+		String macAddress = extra.get("macAddress");
 		if (macAddress != null && !"null".equals(macAddress)) {
 			String macAddressLocal = licenseUtil.getMacAddress();
 			if (macAddress.equals(macAddressLocal)) {
@@ -111,7 +109,7 @@ public class ClientLicenseManager extends LicenseManager {
 			}
 		}
 		
-		String cpuSerial = extra.getCPUSerial();
+		String cpuSerial = extra.get("macAddress");
 		if (cpuSerial != null && !"null".equals(cpuSerial)) {
 			String cpuSerialLocal = licenseUtil.getCPUSerial();
 			if (cpuSerial.equals(cpuSerialLocal)) {
@@ -123,7 +121,7 @@ public class ClientLicenseManager extends LicenseManager {
 			}
 		}
 		
-		String motherboardSN = extra.getMotherboardSN();
+		String motherboardSN = extra.get("macAddress");
 		if (motherboardSN != null && !"null".equals(motherboardSN)) {
 			String motherboardSNLocal = licenseUtil.getMotherboardSN();
 			if (motherboardSN.equals(motherboardSNLocal)) {
@@ -135,7 +133,7 @@ public class ClientLicenseManager extends LicenseManager {
 			}
 		}
 		
-		String hardDiskSN = extra.getHardDiskSN();
+		String hardDiskSN = extra.get("macAddress");
 		if (hardDiskSN != null && !"null".equals(hardDiskSN)) {
 			String hardDiskSNLocal = licenseUtil.getHardDiskSN();
 			if (hardDiskSN.equals(hardDiskSNLocal)) {
@@ -147,7 +145,7 @@ public class ClientLicenseManager extends LicenseManager {
 			}
 		}
 		
-		String serverName = extra.getServerName();
+		String serverName = extra.get("macAddress");
 		if (serverName != null && !"null".equals(serverName)) {
 			String serverNameLocal = licenseUtil.getServerName();
 			if (serverName.equals(serverNameLocal)) {

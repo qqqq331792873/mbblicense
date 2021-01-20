@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 public class ServerLicenseParam {
-	// ------------------------------------------------服务信息------------------------------------------------
+	// ------------------------------------------------系统服务信息------------------------------------------------
 	@Value("${mbblicense.server.info.resource}")
 	private String resource;// 秘钥库位置
 	@Value("${mbblicense.server.info.storePwd}")
@@ -23,13 +23,22 @@ public class ServerLicenseParam {
 	private String alias;// 秘钥
 	@Value("${mbblicense.server.info.keyPwd}")
 	private String keyPwd;// 秘钥密码
-	
 	@Value("${mbblicense.server.info.subject}")
 	private String subject;// 项目名
 	@Value("${mbblicense.server.info.licPath}")
 	private String licPath;// 准备在哪里生成lisence
 	
-	// ------------------------------------------------生成信息------------------------------------------------
+	// ------------------------------------------------生成信息:必选部分------------------------------------------------
+	@Value("${mbblicense.server.manager.issued}")
+	private Long   issued;//授权文件生成时间
+	@Value("${mbblicense.server.manager.notBefore}")
+	private Long   notBefore;//有效开始时间
+	@Value("${mbblicense.server.manager.notAfter}")
+	private Long   notAfter;//有效结束时间
+	@Value("${mbblicense.server.manager.info}")
+	private String info;//授权文件简介信息
+	
+	// ------------------------------------------------生成信息:扩展部分------------------------------------------------
 	@Value("${mbblicense.server.manager.ipAddress:null}")
 	private String ipAddress;//ip地址
 	@Value("${mbblicense.server.manager.macAddress:null}")
@@ -41,14 +50,5 @@ public class ServerLicenseParam {
 	@Value("${mbblicense.server.manager.hardDiskSN:null}")
 	private String hardDiskSN;//硬盘SN号
 	@Value("${mbblicense.server.manager.serverName:null}")
-	private String serverName;//硬盘SN号
-	
-	@Value("${mbblicense.server.manager.issued}")
-	private Long   issued;//授权文件生成时间
-	@Value("${mbblicense.server.manager.notBefore}")
-	private Long   notBefore;//有效开始时间
-	@Value("${mbblicense.server.manager.notAfter}")
-	private Long   notAfter;//有效结束时间
-	@Value("${mbblicense.server.manager.info}")
-	private String info;//授权文件简介信息
+	private String serverName;//服务名称
 }
