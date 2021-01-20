@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta charset='UTF-8'>
+	<title>Title</title>
+</head>
+<script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
+
+<body>
+	<div id='app'>
+		<label for='ipAddress'>ipAddress:</label><input id='ipAddress' type='text' v-model='ipAddress'><br>
+		<label for='macAddress'>macAddress: </label><input id='macAddress' type='text' v-model='macAddress'><br>
+		<label for='CPUSerial'>CPUSerial: </label><input id='CPUSerial' type='text' v-model='CPUSerial'><br>
+		<label for='motherboardSN'>motherboardSN: </label><input id='motherboardSN' type='text' v-model='motherboardSN'><br>
+		<label for='hardDiskSN'>hardDiskSN: </label><input id='hardDiskSN' type='text' v-model='hardDiskSN'><br>
+		<label for='serverName'>serverName: </label><input id='serverName' type='text' v-model='serverName'><br>
+		<button @click='sub'>generate</button>
+	</div>
+</body>
+<script>
+	var app = new Vue({
+		el: "#app",
+		data: {
+			message: "Hello Vue!",
+			ipAddress: "",
+			macAddress: "",
+			CPUSerial: "",
+			motherboardSN: "",
+			hardDiskSN: "",
+			serverName: "",
+		},
+		methods: {
+			sub: ()=>{
+				console.log("是的,可以");
+			},
+		},
+	});
+</script>
+</html>
