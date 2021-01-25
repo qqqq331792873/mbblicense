@@ -1,9 +1,9 @@
 package mbblicense.client.pojo;
 
 import de.schlichtherle.license.KeyStoreParam;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,17 +15,13 @@ import java.io.InputStream;
  */
 @Component
 public class ClientKeyStoreParam implements KeyStoreParam {
-	@Value("${mbblicense.client.info.resource}")
-	private String resource;// 秘钥库位置
-	@Value("${mbblicense.client.info.storePwd}")
-	private String storePwd;// 秘钥库密码
-	@Value("${mbblicense.client.info.alias}")
-	private String alias;// 秘钥
-	
+	@Resource
+	private ClientProperties clientProperties;
 	
 	@Override
 	public InputStream getStream() throws IOException {
-		final InputStream in = ClientLicenseParam.class.getResourceAsStream(resource);
+		String            resource = clientProperties.getResource();
+		final InputStream in       = ClientLicenseParam.class.getResourceAsStream(resource);
 		if (null == in) {
 			throw new FileNotFoundException(resource);
 		}
@@ -34,12 +30,12 @@ public class ClientKeyStoreParam implements KeyStoreParam {
 	
 	@Override
 	public String getStorePwd() {
-		return storePwd;
+		return clientProperties.getStorePwd();
 	}
 	
 	@Override
 	public String getAlias() {
-		return alias;
+		return clientProperties.getAlias();
 	}
 	
 	@Override

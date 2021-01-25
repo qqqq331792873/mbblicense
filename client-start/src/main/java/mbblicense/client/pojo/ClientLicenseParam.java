@@ -4,7 +4,6 @@ import de.schlichtherle.license.CipherParam;
 import de.schlichtherle.license.KeyStoreParam;
 import de.schlichtherle.license.LicenseParam;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -20,9 +19,13 @@ public class ClientLicenseParam implements LicenseParam {
 	ClientKeyStoreParam clientKeyStoreParam;
 	@Resource
 	ClientCipherParam   clientCipherParam;
+	@Resource
+	private ClientProperties clientProperties;
 	
-	@Value("${mbblicense.client.info.subject}")
-	private String subject;// 项目名
+	@Override
+	public String getSubject() {
+		return clientProperties.getSubject();
+	}
 	
 	@Override
 	public Preferences getPreferences() {

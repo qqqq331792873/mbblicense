@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: mbb
+
+server:
+  port: 8088
+
+mbblicense:
+  client:
+    resource: /clientKeys.store
+    storePwd: storeKeys2020
+    alias: clientKey
+    subject: mbblicense
+    licPath: /license.lic
+    debugger: true

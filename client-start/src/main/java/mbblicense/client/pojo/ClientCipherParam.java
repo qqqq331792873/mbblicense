@@ -2,8 +2,9 @@ package mbblicense.client.pojo;
 
 import de.schlichtherle.license.CipherParam;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * 客户端密码参数
@@ -13,11 +14,11 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 public class ClientCipherParam implements CipherParam {
-	@Value("${mbblicense.client.info.storePwd}")
-	private String storePwd;// 秘钥库密码
+	@Resource
+	private ClientProperties clientProperties;
 	
 	@Override
 	public String getKeyPwd() {
-		return storePwd;
+		return clientProperties.getStorePwd();
 	}
 }

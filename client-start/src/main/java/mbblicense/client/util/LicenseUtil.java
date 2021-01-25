@@ -1,11 +1,10 @@
 package mbblicense.client.util;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Scanner;
@@ -15,8 +14,12 @@ import java.util.Scanner;
  *
  * @author 马冰冰
  */
+@Slf4j
 @Component
 public class LicenseUtil {
+	@Value("${spring.application.name:null}")
+	private String serverName = "";
+	
 	/**
 	 * 获取当前的ip地址
 	 */
@@ -29,7 +32,7 @@ public class LicenseUtil {
 	 */
 	public String getMacAddress() throws Exception {
 		byte[]        mac = NetworkInterface.getByInetAddress(InetAddress.getLocalHost()).getHardwareAddress();
-		StringBuilder sb  = new StringBuilder("");
+		StringBuilder sb  = new StringBuilder();
 		for (int i = 0; i < mac.length; i++) {
 			if (i != 0) {
 				sb.append("-");
@@ -59,47 +62,43 @@ public class LicenseUtil {
 		return sc.next();
 	}
 	
-	
 	/**
 	 * 获取主板序列号
 	 */
 	public String getMotherboardSN() throws Exception {
-		String result = "";
-		try {
-			File file = File.createTempFile("realhowto", ".vbs");
-			file.deleteOnExit();
-			FileWriter fw = new java.io.FileWriter(file);
-			
-			String vbs = "Set objWMIService = GetObject(\"winmgmts:\\\\.\\root\\cimv2\")\n" + "Set colItems = objWMIService.ExecQuery _ \n" + "   (\"Select * from Win32_BaseBoard\") \n" + "For Each objItem in colItems \n" + "    Wscript.Echo objItem.SerialNumber \n" + "    exit for  ' do the first cpu only! \n" + "Next \n";
-			
-			fw.write(vbs);
-			fw.close();
-			String         path  = file.getPath().replace("%20", " ");
-			Process        p     = Runtime.getRuntime().exec("cscript //NoLogo " + path);
-			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			String         line;
-			while ((line = input.readLine()) != null) {
-				result += line;
-			}
-			input.close();
-		} catch (Exception e) {
-			e.printStackTrace();
+		StringBuilder result = new StringBuilder();
+		File          file   = File.createTempFile("realhowto", ".vbs");
+		file.deleteOnExit();
+		FileWriter fw = new java.io.FileWriter(file);
+		
+		String vbs = "Set objWMIService = GetObject(\"winmgmts:\\\\.\\root\\cimv2\")\n" + "Set colItems = objWMIService.ExecQuery _ \n" + "   (\"Select * from Win32_BaseBoard\") \n" + "For Each objItem in colItems \n" + "    Wscript.Echo objItem.SerialNumber \n" + "    exit for  ' do the first cpu only! \n" + "Next \n";
+		
+		fw.write(vbs);
+		fw.close();
+		String         path  = file.getPath().replace("%20", " ");
+		Process        p     = Runtime.getRuntime().exec("cscript //NoLogo " + path);
+		BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		String         line;
+		while ((line = input.readLine()) != null) {
+			result.append(line);
 		}
-		return result.trim();
+		input.close();
+		
+		return result.toString().trim();
 	}
 	
 	/**
 	 * 获取硬盘序列号
 	 */
 	public String getHardDiskSN() throws Exception {
-		String         line       = "";
+		String         line;
 		String         HdSerial   = "";//定义变量 硬盘序列号
 		Process        proces     = Runtime.getRuntime().exec("cmd /c dir c:");//获取命令行参数
 		BufferedReader buffreader = new BufferedReader(new InputStreamReader(proces.getInputStream(), "gbk"));
 		
 		while ((line = buffreader.readLine()) != null) {
 			if (line.contains("卷的序列号是 ")) {  //读取参数并获取硬盘序列号
-				HdSerial = line.substring(line.indexOf("卷的序列号是 ") + "卷的序列号是 ".length(), line.length());
+				HdSerial = line.substring(line.indexOf("卷的序列号是 ") + "卷的序列号是 ".length());
 				break;
 			}
 		}
@@ -110,8 +109,8 @@ public class LicenseUtil {
 	/**
 	 * 获取服务名字
 	 */
-	public String getServerName() throws Exception {
-		return "cpis-workorder-provider";
+	public String getServerName() {
+		return serverName;
 	}
 	
 	/**
@@ -126,9 +125,5 @@ public class LicenseUtil {
 		System.out.println("HardDiskSN:" + getHardDiskSN());
 		System.out.println("ServerName:" + getServerName());
 		System.out.println("--------------------------本机信息end--------------------------");
-	}
-	
-	public static void main(String[] args) throws Exception {
-		new LicenseUtil().PrintMachineInformation();
 	}
 }

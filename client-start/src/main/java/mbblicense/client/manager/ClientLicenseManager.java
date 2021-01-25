@@ -4,68 +4,84 @@ import de.schlichtherle.license.LicenseContent;
 import de.schlichtherle.license.LicenseManager;
 import de.schlichtherle.license.LicenseParam;
 import lombok.extern.slf4j.Slf4j;
+import mbblicense.client.pojo.ClientProperties;
 import mbblicense.client.pojo.ClientLicenseParam;
 import mbblicense.client.util.LicenseUtil;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 
 /**
+ * 授权系统管理器
+ *
  * @author 马冰冰
  */
 @Slf4j
 @Component
 public class ClientLicenseManager extends LicenseManager {
 	@Resource
-	ClientLicenseParam clientLicenseParam;
+	private ClientLicenseParam clientLicenseParam;
 	@Resource
-	LicenseUtil        licenseUtil;
+	private LicenseUtil        licenseUtil;
+	@Resource
+	private ClientProperties   clientProperties;
 	
-	@Value("${mbblicense.client.info.licPath}")
-	private String licPath;// lisence位置
-	
-	LicenseContent licenseContent;
+	/**
+	 * 授权内容
+	 */
+	private LicenseContent licenseContent;
 	
 	/**
 	 * 安装和验证
 	 */
-	public void installAndVerify() throws Exception {
-		install();
-		check();
+	public boolean installAndCheck() throws Exception {
+		boolean installSuccess = install();
+		if (!installSuccess) {
+			return false;
+		}
+		return check();
 	}
 	
 	/**
 	 * 安装之后,按理说就不应该再安装了.后续只需要验证即可
 	 */
-	public void install() throws Exception {
-		if (licenseContent == null) {
+	public boolean install() {
+		try {
 			synchronized (this) {
-				if (licenseContent == null) {
-					log.info("开始安装客户端证书!");
-					setLicenseParam(clientLicenseParam);
-					licenseContent = install(new ClassPathResource(licPath).getFile());
-					log.info("客户端证书安装成功!");
-				}
+				log.info("开始安装客户端证书!");
+				setLicenseParam(clientLicenseParam);
+				ClassPathResource classPathResource = new ClassPathResource(clientProperties.getLicPath());
+				File              file              = classPathResource.getFile();
+				licenseContent = install(file);
+				log.info("客户端证书安装成功!" + file);
 			}
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return false;
 		}
+		return true;
 	}
 	
 	/**
 	 * 验证
 	 */
-	public void check() throws Exception {
+	public boolean check() throws Exception {
 		if (licenseContent == null) {
-			install();
+			boolean installSuccess = install();
+			if (!installSuccess) {
+				return false;
+			}
 		}
 		
 		boolean isOk    = true;
 		Date    dateNow = new Date();
 		log.info("授权信息开始验证...");
 		
+		// 验证基础信息
 		Date notBefore = licenseContent.getNotBefore();
 		if (dateNow.getTime() > notBefore.getTime()) {
 			log.info("验证通过:启用时间");
@@ -84,6 +100,7 @@ public class ClientLicenseManager extends LicenseManager {
 			isOk = false;
 		}
 		
+		// 验证扩展信息
 		HashMap<String, String> extra     = (HashMap<String, String>) licenseContent.getExtra();
 		String                  ipAddress = extra.get("ipAddress");
 		if (ipAddress != null && !"null".equals(ipAddress)) {
@@ -158,9 +175,10 @@ public class ClientLicenseManager extends LicenseManager {
 		}
 		
 		if (!isOk) {
-			throw new Exception("授权信息验证失败!!!");
+			log.error("授权信息验证失败!!!");
 		}
-		log.info("授权信息验证通过!!!");
+		
+		return isOk;
 	}
 	
 	/**

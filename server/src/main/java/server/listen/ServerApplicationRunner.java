@@ -1,10 +1,9 @@
-package mbblicense.client.runner;
+package server.listen;
 
-import mbblicense.client.manager.ClientLicenseManager;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+import server.manager.ServerLicenseManager;
 
 import javax.annotation.Resource;
 
@@ -14,14 +13,14 @@ import javax.annotation.Resource;
  *
  * @author 马冰冰
  */
-@PropertySource("classpath:clientKeys.properties")
 @Component
-public class ClientApplicationRunner implements ApplicationRunner {
+public class ServerApplicationRunner implements ApplicationRunner {
 	@Resource
-	ClientLicenseManager clientLicenseManager;
+	ServerLicenseManager serverLicenseManager;
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		clientLicenseManager.installAndVerify();
+		serverLicenseManager.generate();
+		System.out.println("生成成功");
 	}
 }
