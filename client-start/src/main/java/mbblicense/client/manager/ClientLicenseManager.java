@@ -4,16 +4,16 @@ import de.schlichtherle.license.LicenseContent;
 import de.schlichtherle.license.LicenseManager;
 import de.schlichtherle.license.LicenseParam;
 import lombok.extern.slf4j.Slf4j;
-import mbblicense.client.pojo.ClientProperties;
 import mbblicense.client.pojo.ClientLicenseParam;
-import mbblicense.client.util.LicenseUtil;
-import org.springframework.core.io.ClassPathResource;
+import mbblicense.client.pojo.ClientProperties;
+import mbblicense.client.util.SystemInfoUtil;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * 授权系统管理器
@@ -26,7 +26,7 @@ public class ClientLicenseManager extends LicenseManager {
 	@Resource
 	private ClientLicenseParam clientLicenseParam;
 	@Resource
-	private LicenseUtil        licenseUtil;
+	private SystemInfoUtil     systemInfoUtil;
 	@Resource
 	private ClientProperties   clientProperties;
 	
@@ -54,8 +54,7 @@ public class ClientLicenseManager extends LicenseManager {
 			synchronized (this) {
 				log.info("开始安装客户端证书!");
 				setLicenseParam(clientLicenseParam);
-				ClassPathResource classPathResource = new ClassPathResource(clientProperties.getLicPath());
-				File              file              = classPathResource.getFile();
+				File file = new File(clientProperties.getLicPath());
 				licenseContent = install(file);
 				log.info("客户端证书安装成功!" + file);
 			}
@@ -69,7 +68,7 @@ public class ClientLicenseManager extends LicenseManager {
 	/**
 	 * 验证
 	 */
-	public boolean check() throws Exception {
+	public boolean check() {
 		if (licenseContent == null) {
 			boolean installSuccess = install();
 			if (!installSuccess) {
@@ -104,8 +103,8 @@ public class ClientLicenseManager extends LicenseManager {
 		HashMap<String, String> extra     = (HashMap<String, String>) licenseContent.getExtra();
 		String                  ipAddress = extra.get("ipAddress");
 		if (ipAddress != null && !"null".equals(ipAddress)) {
-			String ipAddressLocal = licenseUtil.getIpAddress();
-			if (ipAddress.equals(ipAddressLocal)) {
+			Set<String> ipAddressSet = systemInfoUtil.getIpAddress();
+			if (ipAddressSet.contains(ipAddress)) {
 				log.info("验证通过:IP地址");
 			}
 			else {
@@ -116,8 +115,8 @@ public class ClientLicenseManager extends LicenseManager {
 		
 		String macAddress = extra.get("macAddress");
 		if (macAddress != null && !"null".equals(macAddress)) {
-			String macAddressLocal = licenseUtil.getMacAddress();
-			if (macAddress.equals(macAddressLocal)) {
+			Set<String> macAddressSet = systemInfoUtil.getMacAddress();
+			if (macAddressSet.contains(macAddress)) {
 				log.info("验证通过:MAC地址");
 			}
 			else {
@@ -128,7 +127,7 @@ public class ClientLicenseManager extends LicenseManager {
 		
 		String cpuSerial = extra.get("macAddress");
 		if (cpuSerial != null && !"null".equals(cpuSerial)) {
-			String cpuSerialLocal = licenseUtil.getCPUSerial();
+			String cpuSerialLocal = systemInfoUtil.getCPUSerial();
 			if (cpuSerial.equals(cpuSerialLocal)) {
 				log.info("验证通过:CPU序列号");
 			}
@@ -140,7 +139,7 @@ public class ClientLicenseManager extends LicenseManager {
 		
 		String motherboardSN = extra.get("macAddress");
 		if (motherboardSN != null && !"null".equals(motherboardSN)) {
-			String motherboardSNLocal = licenseUtil.getMotherboardSN();
+			String motherboardSNLocal = systemInfoUtil.getMotherboardSN();
 			if (motherboardSN.equals(motherboardSNLocal)) {
 				log.info("验证通过:主板SN");
 			}
@@ -152,7 +151,7 @@ public class ClientLicenseManager extends LicenseManager {
 		
 		String hardDiskSN = extra.get("macAddress");
 		if (hardDiskSN != null && !"null".equals(hardDiskSN)) {
-			String hardDiskSNLocal = licenseUtil.getHardDiskSN();
+			String hardDiskSNLocal = systemInfoUtil.getHardDiskSN();
 			if (hardDiskSN.equals(hardDiskSNLocal)) {
 				log.info("验证通过:硬盘SN");
 			}
@@ -164,7 +163,7 @@ public class ClientLicenseManager extends LicenseManager {
 		
 		String serverName = extra.get("macAddress");
 		if (serverName != null && !"null".equals(serverName)) {
-			String serverNameLocal = licenseUtil.getServerName();
+			String serverNameLocal = systemInfoUtil.getServerName();
 			if (serverName.equals(serverNameLocal)) {
 				log.info("验证通过:服务名");
 			}
@@ -176,6 +175,9 @@ public class ClientLicenseManager extends LicenseManager {
 		
 		if (!isOk) {
 			log.error("授权信息验证失败!!!");
+		}
+		else {
+			log.info("授权信息验证成功!!!");
 		}
 		
 		return isOk;

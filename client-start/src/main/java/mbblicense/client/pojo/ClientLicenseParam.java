@@ -16,11 +16,11 @@ import java.util.prefs.Preferences;
 @Component
 public class ClientLicenseParam implements LicenseParam {
 	@Resource
-	ClientKeyStoreParam clientKeyStoreParam;
+	private ClientKeyStoreParam clientKeyStoreParam;
 	@Resource
-	ClientCipherParam   clientCipherParam;
+	private ClientCipherParam   clientCipherParam;
 	@Resource
-	private ClientProperties clientProperties;
+	private ClientProperties    clientProperties;
 	
 	@Override
 	public String getSubject() {

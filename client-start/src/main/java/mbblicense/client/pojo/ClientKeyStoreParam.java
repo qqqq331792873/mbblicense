@@ -4,9 +4,7 @@ import de.schlichtherle.license.KeyStoreParam;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 /**
  * 秘钥库参数
@@ -20,12 +18,8 @@ public class ClientKeyStoreParam implements KeyStoreParam {
 	
 	@Override
 	public InputStream getStream() throws IOException {
-		String            resource = clientProperties.getResource();
-		final InputStream in       = ClientLicenseParam.class.getResourceAsStream(resource);
-		if (null == in) {
-			throw new FileNotFoundException(resource);
-		}
-		return in;
+		String resource = clientProperties.getResource();
+		return new FileInputStream(new File(resource));
 	}
 	
 	@Override

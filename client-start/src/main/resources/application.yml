@@ -7,9 +7,9 @@ server:
 
 mbblicense:
   client:
-    resource: /clientKeys.store
+    resource: C:/Users/马冰冰/Desktop/绝对路径/clientKeys.store
     storePwd: storeKeys2020
     alias: clientKey
     subject: mbblicense
-    licPath: /license.lic
+    licPath: C:/Users/马冰冰/Desktop/绝对路径/license.lic
     debugger: true
