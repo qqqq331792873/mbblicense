@@ -15,11 +15,11 @@
 ```
 mbblicense:
   client:
-    resource: /clientKeys.store
+    resource: C:/Users/马冰冰/Desktop/绝对路径/clientKeys.store
     storePwd: storeKeys2020
     alias: clientKey
     subject: mbblicense
-    licPath: /license.lic
+    licPath: C:/Users/马冰冰/Desktop/绝对路径/license.lic
     debugger: true
 ```
 
@@ -28,28 +28,10 @@ mbblicense:
     + license.lic
     
 - ### 在您的项目中使用安装/验证功能
+    您可以通过在任何地方引入管理器,直接操作授权文件信息.
 ```
 @Resource
 ClientLicenseManager clientLicenseManager;
-@Resource
-LicenseUtil          licenseUtil;
-
-public void useLicense() throws Exception {
-	// 我们提供了一个工具类,用于获取本机信息
-	licenseUtil.PrintMachineInformation();
-	
-	// 首先,准备安装授权文件.安装后将一直存在于系统上下文中.除非更换授权文件,否则您可以只安装一次.后续仅仅检查即可.
-	boolean installSuccess = clientLicenseManager.install();
-	// doSomeThing 跳转购买页
-	
-	// 第二部,检查授权文件的内容是否合法
-	boolean checkSuccess = clientLicenseManager.check();
-	// doSomeThing
-	
-	// 当然,您也可以安装检查一起做
-	boolean isSuccess = clientLicenseManager.installAndCheck();
-	// doSomeThing
-}
 ```
 
 - ### 启动项目

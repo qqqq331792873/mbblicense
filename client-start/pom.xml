@@ -40,10 +40,10 @@
 		</dependency>
 		<!--*********************做鉴权文件用的end*********************-->
 		
-		<!--web项目-->
+		<!--slf4j-->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
 		</dependency>
 		
 		<!--lombok-->
