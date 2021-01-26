@@ -38,7 +38,7 @@ public class ClientLicenseManager extends LicenseManager {
 	/**
 	 * 安装和验证
 	 */
-	public boolean installAndCheck() throws Exception {
+	public boolean installAndCheck() {
 		boolean installSuccess = install();
 		if (!installSuccess) {
 			return false;
