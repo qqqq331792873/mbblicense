@@ -11,7 +11,8 @@
 	
 	<groupId>com.github.qqqq331792873.mbblicense</groupId>
 	<artifactId>client-start</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0-releases</version>
+	
 	<name>client-start</name>
 	<description>development kit of client for authorization</description>
 	
@@ -64,6 +65,14 @@
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
+	
+	<distributionManagement>
+		<repository>
+			<id>cpis-releases</id>
+			<name>releases</name>
+			<url>http://172.18.20.28:8081/nexus/content/repositories/releases</url>
+		</repository>
+	</distributionManagement>
 	
 	<build>
 		<plugins>
