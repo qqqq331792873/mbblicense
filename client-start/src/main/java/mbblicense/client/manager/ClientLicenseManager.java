@@ -184,7 +184,7 @@ public class ClientLicenseManager extends LicenseManager {
 	}
 	
 	/**
-	 * 设置参数
+	 * 设置参数 todombb 这里如果不写会怎么样?好像也没事啊
 	 */
 	@Override
 	public synchronized void setLicenseParam(LicenseParam param) {

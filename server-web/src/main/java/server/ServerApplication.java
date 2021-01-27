@@ -2,7 +2,8 @@ package server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import server.pojo.ServerProperties;
 
 /**
  * 授权系统服务端:用于生成授权文件(store自行准备,或使用本系统的)
@@ -12,12 +13,10 @@ import org.springframework.context.annotation.PropertySource;
  *
  * @author BrankoMa
  */
-@PropertySource("classpath:serverKeys.properties")
 @SpringBootApplication
+@EnableConfigurationProperties(ServerProperties.class)
 public class ServerApplication {
-	
 	public static void main(String[] args) {
 		SpringApplication.run(ServerApplication.class, args);
 	}
-	
 }

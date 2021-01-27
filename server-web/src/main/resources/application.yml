@@ -1,0 +1,17 @@
+#项目配置文件
+spring:
+  mvc:
+    view:
+      suffix: .html
+    static-path-pattern: /**
+
+#生成授权文件所需要的配置
+mbblicense:
+  server:
+    resource: C:\Users\马冰冰\Desktop\绝对路径\serverKeys.store
+    storePwd: storeKeys2020
+    alias: serverKey
+    keyPwd: serverKey2020
+    subject: mbblicense
+    licPath: C:\Users\马冰冰\Desktop\绝对路径\license.lic
+    

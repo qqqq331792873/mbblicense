@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta charset='UTF-8'>
+	<title>Title</title>
+</head>
+<!-- axios网络请求 -->
+<script src='/js/axios.min.js'></script>
+<!-- vue核心 -->
+<script src='/js/vue.js'></script>
+<!-- 引入样式 -->
+<link rel='stylesheet' href='/css/index.css'>
+<!-- 引入组件库 -->
+<script src='/js/index.js'></script>
+
+<body>
+	<div id='app'>
+		<el-form :model='formData' label-width='180px' :rules='rules' ref='ruleForm' label-position='right'>
+			<el-row :gutter='20'>
+				<el-col :span='12'>
+					<el-card style='margin: 5px' shadow='hover'>
+						<el-form-item label='有效期开始' prop='notBefore'>
+							<el-date-picker v-model='formData.notBefore' value-format='timestamp' type='datetime' placeholder='选择日期时间'/>
+						</el-form-item>
+					</el-card>
+				</el-col>
+				
+				<el-col :span='12'>
+					<el-card style='margin: 5px' shadow='hover'>
+						<el-form-item label='有效期结束' prop='notAfter' :span='8'>
+							<el-date-picker v-model='formData.notAfter' value-format='timestamp' type='datetime' placeholder='选择日期时间'/>
+						</el-form-item>
+					</el-card>
+				</el-col>
+			</el-row>
+			
+			<el-row :gutter='20'>
+				<el-col :span='12'>
+					<el-card style='margin: 5px' shadow='hover'>
+						<el-form-item label='服务名'>
+							<el-input v-model='formData.serverName'/>
+						</el-form-item>
+					</el-card>
+				</el-col>
+				<el-col :span='12'>
+					<el-card style='margin: 5px' shadow='hover'>
+						<el-form-item label='备注信息' prop='info'>
+							<el-input v-model='formData.info'></el-input>
+						</el-form-item>
+					</el-card>
+				</el-col>
+			</el-row>
+			
+			<el-row :gutter='20'>
+				<el-col :span='12'>
+					<el-card style='margin: 5px' shadow='hover'>
+						<el-form-item label='ip地址'>
+							<el-input v-model='formData.ipAddress'></el-input>
+						</el-form-item>
+					</el-card>
+				</el-col>
+				<el-col :span='12'>
+					<el-card style='margin: 5px' shadow='hover'>
+						<el-form-item label='mac地址'>
+							<el-input v-model='formData.macAddress'></el-input>
+						</el-form-item>
+					</el-card>
+				</el-col>
+			</el-row>
+			
+			<el-row :gutter='20'>
+				<el-col :span='12'>
+					<el-card style='margin: 5px' shadow='hover'>
+						<el-form-item label='cpu序列号'>
+							<el-input v-model='formData.CPUSerial'></el-input>
+						</el-form-item>
+					</el-card>
+				</el-col>
+				<el-col :span='12'>
+					<el-card style='margin: 5px' shadow='hover'>
+						<el-form-item label='主板序列号'>
+							<el-input v-model='formData.motherboardSN'></el-input>
+						</el-form-item>
+					</el-card>
+				</el-col>
+			</el-row>
+			
+			<el-row :gutter='20'>
+				<el-col :span='12'>
+					<el-card style='margin: 5px' shadow='hover'>
+						<el-form-item label='硬盘序列号'>
+							<el-input v-model='formData.hardDiskSN'></el-input>
+						</el-form-item>
+					</el-card>
+				</el-col>
+			</el-row>
+			
+			<el-divider></el-divider>
+			
+			<el-row :gutter='20'>
+				<el-col :span='12' :offset='6'>
+					<el-form-item style='display: flex;flex-direction: row;justify-content: space-between;margin: 0'>
+						<el-button type='primary' @click='generate'>生成</el-button>
+						<el-button @click='cancel'>取消</el-button>
+					</el-form-item>
+				</el-col>
+			</el-row>
+		
+		</el-form>
+	</div>
+</body>
+<script>
+	var app = new Vue({
+		el: "#app",
+		data: {
+			message: "Hello Vue!",
+			formData: {
+				issued: null,
+				notBefore: null,
+				notAfter: null,
+				info: null,
+				ipAddress: null,
+				macAddress: null,
+				CPUSerial: null,
+				motherboardSN: null,
+				hardDiskSN: null,
+				serverName: null,
+			},
+			rules: {
+				notBefore: [
+					{
+						required: true,
+						message: "请填写",
+					},
+				],
+				notAfter: [
+					{
+						required: true,
+						message: "请填写",
+					},
+				],
+				info: [
+					{
+						// required: true,
+						message: "请填写",
+					},
+				],
+			},
+		},
+		methods: {
+			generate: function(){
+				this.$refs.ruleForm.validate((valid)=>{
+					if(valid){
+						console.log("验证通过!");
+						this.formData.issued = new Date().getTime();
+						axios.post("/server/generate", this.formData).then(function(response){
+							if(response.status===200){
+								alert(response.data ? "生成成功" : "生成失败");
+							}else{
+								alert("生成异常");
+							}
+						}).catch(function(error){
+							console.log(error);
+						});
+					}else{
+						console.log("验证不通过!!");
+						return false;
+					}
+				});
+			},
+			cancel: function(){
+				console.log("取消了", this.formData);
+			},
+		},
+	});
+</script>
+</html>
