@@ -35,8 +35,8 @@ public class ClientProperties {
 	public String  licPath;
 	/**
 	 * 开启debugger:
-	 * 会自动安装,校验一次
 	 * 有系统信息等一些标准打印
+	 * 同时会自动安装,并校验测试一次
 	 */
 	public boolean debugger;
 }

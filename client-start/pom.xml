@@ -65,35 +65,4 @@
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
-	
-	<distributionManagement>
-		<repository>
-			<id>cpis-releases</id>
-			<name>releases</name>
-			<url>http://172.18.20.28:8081/nexus/content/repositories/releases</url>
-		</repository>
-	</distributionManagement>
-	
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-						<exclude>
-							<groupId>org.springframework.boot</groupId>
-							<artifactId>spring-boot-configuration-processor</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
 </project>
