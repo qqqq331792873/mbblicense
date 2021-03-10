@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * @author 马冰冰
+ * mbb 密码参数
  */
 @Component
 public class ServerCipherParam implements CipherParam {

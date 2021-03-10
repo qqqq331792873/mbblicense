@@ -2,7 +2,6 @@ package mbblicense.client.manager;
 
 import de.schlichtherle.license.LicenseContent;
 import de.schlichtherle.license.LicenseManager;
-import de.schlichtherle.license.LicenseParam;
 import lombok.extern.slf4j.Slf4j;
 import mbblicense.client.pojo.ClientLicenseParam;
 import mbblicense.client.pojo.ClientProperties;
@@ -16,9 +15,8 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
+ * todombb 有个bug,如果用户重新安装,由于单例模式,重新安装,setLicenseParam方法注入的还是旧的clientLicenseParam,导致新的license文件无法使用最新的
  * 授权系统管理器
- *
- * @author 马冰冰
  */
 @Slf4j
 @Component
@@ -31,12 +29,12 @@ public class ClientLicenseManager extends LicenseManager {
 	private ClientProperties   clientProperties;
 	
 	/**
-	 * 授权内容
+	 * mbb 授权内容
 	 */
 	private LicenseContent licenseContent;
 	
 	/**
-	 * 安装和验证
+	 * mbb 安装和验证
 	 */
 	public boolean installAndCheck() {
 		boolean installSuccess = install();
@@ -47,7 +45,7 @@ public class ClientLicenseManager extends LicenseManager {
 	}
 	
 	/**
-	 * 安装之后,按理说就不应该再安装了.后续只需要验证即可
+	 * mbb 安装之后,按理说就不应该再安装了.后续只需要验证即可
 	 */
 	public boolean install() {
 		try {
@@ -66,7 +64,7 @@ public class ClientLicenseManager extends LicenseManager {
 	}
 	
 	/**
-	 * 验证
+	 * mbb 验证
 	 */
 	public boolean check() {
 		if (licenseContent == null) {
@@ -161,7 +159,7 @@ public class ClientLicenseManager extends LicenseManager {
 			}
 		}
 		
-		String serverName = extra.get("macAddress");
+		String serverName = extra.get("serverName");
 		if (serverName != null && !"null".equals(serverName)) {
 			String serverNameLocal = systemInfoUtil.getServerName();
 			if (serverName.equals(serverNameLocal)) {
@@ -181,13 +179,5 @@ public class ClientLicenseManager extends LicenseManager {
 		}
 		
 		return isOk;
-	}
-	
-	/**
-	 * 设置参数 todombb 这里如果不写会怎么样?好像也没事啊
-	 */
-	@Override
-	public synchronized void setLicenseParam(LicenseParam param) {
-		super.setLicenseParam(param);
 	}
 }

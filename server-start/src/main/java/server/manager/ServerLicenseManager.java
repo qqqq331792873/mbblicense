@@ -15,9 +15,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 /**
- * 生成器工具:操作的入口
- *
- * @author 马冰冰
+ * mbb 生成器工具:操作的入口
  */
 @Slf4j
 @Component

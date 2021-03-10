@@ -7,9 +7,7 @@ import javax.annotation.Resource;
 import java.io.*;
 
 /**
- * 秘钥库参数
- *
- * @author 马冰冰
+ * mbb 秘钥库参数
  */
 @Component
 public class ClientKeyStoreParam implements KeyStoreParam {

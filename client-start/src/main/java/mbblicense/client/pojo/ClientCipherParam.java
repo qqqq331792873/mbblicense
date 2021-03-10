@@ -7,9 +7,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * 客户端密码参数
- *
- * @author 马冰冰
+ * mbb 客户端密码参数
  */
 @Data
 @Component

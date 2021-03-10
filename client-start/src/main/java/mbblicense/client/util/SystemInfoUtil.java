@@ -13,9 +13,7 @@ import java.net.NetworkInterface;
 import java.util.*;
 
 /**
- * 工具类,用于获取当前机器的信息
- *
- * @author 马冰冰
+ * mbb 工具类,用于获取当前机器的信息
  */
 @Data
 @Slf4j
@@ -31,7 +29,7 @@ public class SystemInfoUtil {
 	private String      hardDiskSN    = "";
 	
 	/**
-	 * 根据系统类别初始化系统信息
+	 * mbb 根据系统类别初始化系统信息
 	 */
 	public void init() {
 		initIpAddress();
@@ -42,7 +40,7 @@ public class SystemInfoUtil {
 	}
 	
 	/**
-	 * 获取硬盘序列号
+	 * mbb 获取硬盘序列号
 	 */
 	private void initHardDiskSN() {
 		String hardDiskSN = "";
@@ -73,7 +71,7 @@ public class SystemInfoUtil {
 	}
 	
 	/**
-	 * 获取主板序列号
+	 * mbb 获取主板序列号
 	 */
 	private void initMotherboardSN() {
 		if (isWindowsOS()) {
@@ -122,7 +120,7 @@ public class SystemInfoUtil {
 	}
 	
 	/**
-	 * 获取CPU序列号
+	 * mbb 获取CPU序列号
 	 */
 	private void initCPUSerial() {
 		String CPUSerial = "";
@@ -161,7 +159,7 @@ public class SystemInfoUtil {
 	}
 	
 	/**
-	 * 初始化Mac地址
+	 * mbb 初始化Mac地址
 	 */
 	private void initMacAddress() {
 		Set<String> macAddress = new HashSet<>();
@@ -223,7 +221,7 @@ public class SystemInfoUtil {
 	}
 	
 	/**
-	 * 初始化IP地址
+	 * mbb 初始化IP地址
 	 */
 	private void initIpAddress() {
 		Set<String> ipAddress = new HashSet<>();
@@ -258,7 +256,7 @@ public class SystemInfoUtil {
 	}
 	
 	/**
-	 * 是否为windows
+	 * mbb 是否为windows
 	 * 不是windows一律当做linux,其他系统不支持.
 	 */
 	private boolean isWindowsOS() {
@@ -271,7 +269,7 @@ public class SystemInfoUtil {
 	}
 	
 	/**
-	 * 打印本机信息
+	 * mbb 打印本机信息
 	 */
 	public void PrintMachineInformation() {
 		init();

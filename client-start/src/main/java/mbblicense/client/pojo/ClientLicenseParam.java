@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import java.util.prefs.Preferences;
 
 /**
- * @author 马冰冰
+ * mbb 授权文件参数
  */
 @Data
 @Component

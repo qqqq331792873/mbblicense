@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * @author 马冰冰
+ * mbb
  */
 @Component
 public class ServerKeyStoreParam implements KeyStoreParam {

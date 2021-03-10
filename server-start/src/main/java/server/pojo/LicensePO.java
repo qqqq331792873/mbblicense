@@ -3,7 +3,7 @@ package server.pojo;
 import lombok.Data;
 
 /**
- * @author 马冰冰
+ * mbb 授权文件
  */
 @Data
 public class LicensePO {

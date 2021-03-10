@@ -8,10 +8,9 @@ spring:
 #生成授权文件所需要的配置
 mbblicense:
   server:
-    resource: C:\Users\马冰冰\Desktop\绝对路径\serverKeys.store
+    resource: D:\file\授权文件\serverKeys.store
     storePwd: storeKeys2020
     alias: serverKey
     keyPwd: serverKey2020
     subject: mbblicense
-    licPath: C:\Users\马冰冰\Desktop\绝对路径\license.lic
-    
+    licPath: D:\file\授权文件\license.lic

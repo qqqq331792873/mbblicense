@@ -6,9 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 配置文件:自动加载
- *
- * @author 马冰冰
+ * mbb 配置文件:自动加载
  */
 @Configuration
 @ComponentScan("mbblicense.client")

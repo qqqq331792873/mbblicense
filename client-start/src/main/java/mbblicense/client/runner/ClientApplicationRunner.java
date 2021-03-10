@@ -11,10 +11,7 @@ import javax.annotation.Resource;
 
 
 /**
- * 启动监听器:用于启动时检查
- * 项目启动的时候检查
- *
- * @author 马冰冰
+ * mbb 启动监听器:用于启动时检查
  */
 @Component
 @ConditionalOnProperty(prefix = "mbblicense.client", name = "debugger", havingValue = "true")
@@ -25,7 +22,7 @@ public class ClientApplicationRunner implements ApplicationRunner {
 	ClientLicenseManager clientLicenseManager;
 	
 	@Override
-	public void run(ApplicationArguments args) throws Exception {
+	public void run(ApplicationArguments args) {
 		systemInfoUtil.init();
 		// 我们提供了一个工具类,用于获取本机信息
 		systemInfoUtil.PrintMachineInformation();

@@ -11,7 +11,7 @@ import server.pojo.LicensePO;
 import javax.annotation.Resource;
 
 /**
- * @author 马冰冰
+ * mbb
  */
 @Slf4j
 @RestController

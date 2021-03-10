@@ -10,10 +10,10 @@
 	</parent>
 	
 	<groupId>com.github.qqqq331792873.mbblicense</groupId>
-	<artifactId>server-web</artifactId>
+	<artifactId>server-start</artifactId>
 	<version>1.0.0-releases</version>
 	
-	<name>server-web</name>
+	<name>server-start</name>
 	<description>development kit of server for authorization</description>
 	
 	<properties>
@@ -41,6 +41,12 @@
 		</dependency>
 		<!--*************************做鉴权文件用的end*************************-->
 		
+		<!--web项目-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
 		<!--lombok-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -59,22 +65,4 @@
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
-	
-	<!--	<build>-->
-	<!--		<plugins>-->
-	<!--			<plugin>-->
-	<!--				<groupId>org.springframework.boot</groupId>-->
-	<!--				<artifactId>spring-boot-maven-plugin</artifactId>-->
-	<!--				<configuration>-->
-	<!--					<excludes>-->
-	<!--						<exclude>-->
-	<!--							<groupId>org.projectlombok</groupId>-->
-	<!--							<artifactId>lombok</artifactId>-->
-	<!--						</exclude>-->
-	<!--					</excludes>-->
-	<!--				</configuration>-->
-	<!--			</plugin>-->
-	<!--		</plugins>-->
-	<!--	</build>-->
-
 </project>
