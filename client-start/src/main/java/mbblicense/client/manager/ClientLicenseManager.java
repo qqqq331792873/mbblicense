@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
- * todombb 有个bug,如果用户重新安装,由于单例模式,重新安装,setLicenseParam方法注入的还是旧的clientLicenseParam,导致新的license文件无法使用最新的
  * 授权系统管理器
  */
 @Slf4j
