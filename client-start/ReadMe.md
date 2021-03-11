@@ -21,6 +21,7 @@ mbblicense:
     licPath: C:/Users/马冰冰/Desktop/绝对路径/license.lic
     debugger: true
 ```
+ps:路径和文件名尽量不要包含中文(此例中的中文就不推荐,开发人员不小心放错位置)
 
 - ### 将授权文件放在配置中描述的位置
     - clientKeys.store

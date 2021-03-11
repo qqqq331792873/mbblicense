@@ -37,7 +37,7 @@
 			<el-row :gutter='20'>
 				<el-col :span='12'>
 					<el-card style='margin: 5px' shadow='hover'>
-						<el-form-item label='服务名'>
+						<el-form-item label='服务名' prop='serverName'>
 							<el-input v-model='formData.serverName'/>
 						</el-form-item>
 					</el-card>
@@ -127,23 +127,21 @@
 				serverName: null,
 			},
 			rules: {
-				notBefore: [
-					{
-						required: true,
-						message: "请填写",
-					},
-				],
-				notAfter: [
-					{
-						required: true,
-						message: "请填写",
-					},
-				],
-				info: [
-					{
-						// required: true,
-						message: "请填写",
-					},
+				notBefore: [{
+					required: true,
+					message: "请填写",
+				}],
+				notAfter: [{
+					required: true,
+					message: "请填写",
+				}],
+				info: [{
+					message: "请填写",
+				}],
+				serverName: [{
+					required: true,
+					message: "请填写",
+				},
 				],
 			},
 		},
