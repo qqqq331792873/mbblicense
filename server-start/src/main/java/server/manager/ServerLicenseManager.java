@@ -36,7 +36,6 @@ public class ServerLicenseManager extends LicenseManager {
 		licenseExtra.put("hardDiskSN", licensePO.getHardDiskSN());
 		licenseExtra.put("serverName", licensePO.getServerName());
 		
-		
 		X500Principal DEFAULTHOLDERANDISSUER = new X500Principal("CN=shelby, OU=org, O=org, L=china, ST=china, C=china");
 		
 		LicenseContent content = new LicenseContent();

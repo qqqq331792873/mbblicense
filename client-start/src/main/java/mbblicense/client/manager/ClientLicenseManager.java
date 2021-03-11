@@ -7,6 +7,7 @@ import mbblicense.client.pojo.ClientLicenseParam;
 import mbblicense.client.pojo.ClientProperties;
 import mbblicense.client.util.SystemInfoUtil;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.io.File;
@@ -78,7 +79,7 @@ public class ClientLicenseManager extends LicenseManager {
 		Date    dateNow = new Date();
 		log.info("授权信息开始验证...");
 		
-		// 验证基础信息
+		// 1.开始时间
 		Date notBefore = licenseContent.getNotBefore();
 		if (dateNow.getTime() > notBefore.getTime()) {
 			log.info("验证通过:启用时间");
@@ -88,6 +89,7 @@ public class ClientLicenseManager extends LicenseManager {
 			isOk = false;
 		}
 		
+		// 2.结束时间
 		Date notAfter = licenseContent.getNotAfter();
 		if (dateNow.getTime() < notAfter.getTime()) {
 			log.info("验证通过:失效时间");
@@ -97,10 +99,10 @@ public class ClientLicenseManager extends LicenseManager {
 			isOk = false;
 		}
 		
-		// 验证扩展信息
-		HashMap<String, String> extra     = (HashMap<String, String>) licenseContent.getExtra();
-		String                  ipAddress = extra.get("ipAddress");
-		if (ipAddress != null && !"null".equals(ipAddress)) {
+		HashMap<String, String> extra = (HashMap<String, String>) licenseContent.getExtra();
+		// 3.IP地址
+		String ipAddress = extra.get("ipAddress");
+		if (!StringUtils.isEmpty(ipAddress)) {
 			Set<String> ipAddressSet = systemInfoUtil.getIpAddress();
 			if (ipAddressSet.contains(ipAddress)) {
 				log.info("验证通过:IP地址");
@@ -111,8 +113,9 @@ public class ClientLicenseManager extends LicenseManager {
 			}
 		}
 		
+		// 4.mac地址
 		String macAddress = extra.get("macAddress");
-		if (macAddress != null && !"null".equals(macAddress)) {
+		if (!StringUtils.isEmpty(macAddress)) {
 			Set<String> macAddressSet = systemInfoUtil.getMacAddress();
 			if (macAddressSet.contains(macAddress)) {
 				log.info("验证通过:MAC地址");
@@ -123,8 +126,9 @@ public class ClientLicenseManager extends LicenseManager {
 			}
 		}
 		
+		// 5.cpu序列号
 		String cpuSerial = extra.get("macAddress");
-		if (cpuSerial != null && !"null".equals(cpuSerial)) {
+		if (!StringUtils.isEmpty(cpuSerial)) {
 			String cpuSerialLocal = systemInfoUtil.getCPUSerial();
 			if (cpuSerial.equals(cpuSerialLocal)) {
 				log.info("验证通过:CPU序列号");
@@ -135,8 +139,9 @@ public class ClientLicenseManager extends LicenseManager {
 			}
 		}
 		
+		// 6.主板SN
 		String motherboardSN = extra.get("macAddress");
-		if (motherboardSN != null && !"null".equals(motherboardSN)) {
+		if (!StringUtils.isEmpty(motherboardSN)) {
 			String motherboardSNLocal = systemInfoUtil.getMotherboardSN();
 			if (motherboardSN.equals(motherboardSNLocal)) {
 				log.info("验证通过:主板SN");
@@ -147,8 +152,9 @@ public class ClientLicenseManager extends LicenseManager {
 			}
 		}
 		
+		// 7.硬盘SN
 		String hardDiskSN = extra.get("macAddress");
-		if (hardDiskSN != null && !"null".equals(hardDiskSN)) {
+		if (!StringUtils.isEmpty(hardDiskSN)) {
 			String hardDiskSNLocal = systemInfoUtil.getHardDiskSN();
 			if (hardDiskSN.equals(hardDiskSNLocal)) {
 				log.info("验证通过:硬盘SN");
@@ -159,8 +165,9 @@ public class ClientLicenseManager extends LicenseManager {
 			}
 		}
 		
+		// 8.服务名
 		String serverName = extra.get("serverName");
-		if (serverName != null && !"null".equals(serverName)) {
+		if (!StringUtils.isEmpty(serverName)) {
 			String serverNameLocal = systemInfoUtil.getServerName();
 			if (serverName.equals(serverNameLocal)) {
 				log.info("验证通过:服务名");

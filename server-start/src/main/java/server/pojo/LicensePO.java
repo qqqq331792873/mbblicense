@@ -1,11 +1,13 @@
 package server.pojo;
 
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * mbb 授权文件
  */
 @Data
+@ToString
 public class LicensePO {
 	// ------------------------------------------------生成信息:必选部分------------------------------------------------
 	/**

@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * mbb 鉴权所需要的一些配置
+ * mbb yml所有配置映射
  */
 @Data
 @Component

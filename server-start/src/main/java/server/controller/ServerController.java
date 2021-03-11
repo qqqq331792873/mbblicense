@@ -18,12 +18,12 @@ import javax.annotation.Resource;
 @RequestMapping("/server")
 public class ServerController {
 	@Resource
-	ServerLicenseManager ServerLicenseManager;
+	ServerLicenseManager serverLicenseManager;
 	
 	@PostMapping("/generate")
 	public boolean generate(@RequestBody LicensePO licensePO) {
-		log.info("准备生成");
-		boolean generate = ServerLicenseManager.generate(licensePO);
+		log.info("准备生成:" + licensePO);
+		boolean generate = serverLicenseManager.generate(licensePO);
 		if (generate) {
 			log.info("生成成功");
 			return true;

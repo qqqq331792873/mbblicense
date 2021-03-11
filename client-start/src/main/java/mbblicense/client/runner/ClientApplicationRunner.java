@@ -23,9 +23,11 @@ public class ClientApplicationRunner implements ApplicationRunner {
 	
 	@Override
 	public void run(ApplicationArguments args) {
-		systemInfoUtil.init();
-		// 我们提供了一个工具类,用于获取本机信息
-		systemInfoUtil.PrintMachineInformation();
+		// 初始化环境信息
+		systemInfoUtil.initSystemInfo();
+		// 打印环境信息
+		systemInfoUtil.printSystemInfo();
+		// 首次安装和检测
 		clientLicenseManager.installAndCheck();
 	}
 }
